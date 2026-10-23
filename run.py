@@ -1,6 +1,14 @@
-from app.core.config import get_settings
+from app.services.ingestion import load_file
+from pathlib import Path
+from app.services.ingestion import chunk_documents
+from app.rag.vectorstore import add_documents
 
-settings = get_settings()
 
-print(f"App Name: {settings.app_name}")
-print(f"Groq API Key: {settings.groq_api_key}")
+
+
+docs = load_file(Path("data/sample_kb/company_it_handbook.md"))
+chunks = chunk_documents(docs)
+print(len(docs))
+
+
+add_documents(chunks)
